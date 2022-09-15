@@ -1,0 +1,54 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.7.
+--
+-- see: https://github.com/sol/hpack
+
+name:           uploader
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/uploader#readme>
+homepage:       https://github.com/githubuser/uploader#readme
+bug-reports:    https://github.com/githubuser/uploader/issues
+author:         Kamila Dzhavatova
+maintainer:     kamila.dzhavatova@gmail.com
+copyright:      2022 Kamila Dzhavatova
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    CHANGELOG.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/uploader
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_uploader
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      base >=4.7 && <5
+    , postgresql-simple >=0.6.4
+    , random
+    , time
+  default-language: Haskell2010
+
+executable uploader-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_uploader
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , postgresql-simple >=0.6.4
+    , random
+    , time
+    , uploader
+  default-language: Haskell2010
