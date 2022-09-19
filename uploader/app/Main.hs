@@ -44,23 +44,29 @@ insertRecords conn table =
       INSERT INTO test VALUES (?, ?)
     |] table
 
+-- Utility function to convert calendar days to postgres compatible UTCTime
+dayToUtcTime :: Day -> UTCTime
+dayToUtcTime day = read (show day ++ " 00:00:00 UTC") :: UTCTime
+
 -- As a first iteration we'll generate artificial records. Entries will be
 -- generated with a recursive function. Parameters for generation is time range
 -- and upper/lower boundaries for random: [ entry1 entry2 entry3 entry4 ]
 generateRecords :: IO [ TableEntry ]
 generateRecords =
   let
-    generateRecord :: Int -> [ TableEntry ] -> IO [ TableEntry ]
-    generateRecord count acc
-      | count == 0 =
+    firstDay = read "2021-01-01" :: Day
+    lastDay = read "2022-09-09" :: Day
+    generateRecord :: Day -> [ TableEntry ] -> IO [ TableEntry ]
+    generateRecord currentDay acc
+      | currentDay == lastDay =
           return acc
       | otherwise = do
-          now <- getCurrentTime
+          let utcTime = dayToUtcTime currentDay
           value <- randomRIO (0, 100)
-          let entry = TableEntry now value
-          generateRecord (count - 1) (entry:acc)
+          let entry = TableEntry utcTime value
+          generateRecord (addDays 1 currentDay) (entry:acc)
   in
-    generateRecord 1000000 []
+    generateRecord firstDay []
 
 main :: IO ()
 main = do
