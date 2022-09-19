@@ -21,8 +21,11 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
+# Add time for timestamp generation
 - time
+# Add postgres for DDL/DML
 - postgresql-simple >= 0.6.4
+# Add random for random values in inserts
 - random
 
 ghc-options:
