@@ -10,30 +10,29 @@ conn_string = 'postgresql+psycopg2://kamila@localhost/postgres'
 db = create_engine(conn_string)
 conn = db.connect()
 
-
-
-# assume you have a "long-form" data frame
-# see https://plotly.com/python/px-arguments/ for more options
-dfMock = pd.DataFrame({
-    "datetime": ["yesterday", "today", "tomorrow"],
-    "observation": [4, 1, 2],
-})
-
 def serve_layout():
-    df = pd.read_sql("select * from test", conn);
-    fig = px.line(df, x="datetime", y="observation")
+    df_1 = pd.read_sql("select * from test", conn);
+    df_2 = pd.read_sql("select * from observation_per_month", conn);
+
+    raw_data = px.line(df_1, x="datetime", y="observation")
+    bar_chart = px.bar(df_2, x='month', y='value', color='year', barmode='group')
 
     return html.Div(children=[
-        html.H1(children='Hello Dash'),
+        html.H1(children='HelloK'),
 
         html.Div(children='''
-        Dash: A web application framework for your data.
-    '''),
+            My demo using haskell and dash
+        '''),
 
-    dcc.Graph(
-        id='example-graph',
-        figure=fig
-    )
+        dcc.Graph(
+            id='raw-data',
+            figure=raw_data
+        ),
+
+        dcc.Graph(
+            id='view-data',
+            figure=bar_chart
+        )
     ])
 
 app = Dash(__name__)
