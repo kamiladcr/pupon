@@ -6,7 +6,17 @@ create table test (
   observation int
 );
 
-insert into test values (
-    (select now()),
-    10
-);
+drop view observation_per_month;
+create view observation_per_month as
+  select
+    to_char(datetime, 'YYYY') as year,
+    to_char(datetime, 'MM') as month,
+    avg(observation) as value
+    from test
+    group by year, month
+;
+
+-- insert into test values (
+--     (select now()),
+--     10
+-- );
