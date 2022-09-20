@@ -5,10 +5,19 @@ let
   ) {};
 
   pythonEnv = pkgs.python3.withPackages (pypi: with pypi; [
+    # Our application will work based on dash (simple web applicaton with python)
     dash
-    pandas
+
+    # This is a postgres connector for python and
+    # and alchemy-thingy for creating connections
     psycopg2
     sqlalchemy
+
+    # Pandas!
+    pandas
+
+    # Shell requires pkg_config for some reason,
+    # so we need setuptools that has it.
     setuptools
   ]);
 
