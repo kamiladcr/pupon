@@ -37,7 +37,6 @@ data TableEntry = TableEntry {
   deriving (Show, Generic, ToRow)
 
 -- We're using this function to insert data into database
--- It currently takes one row but we're going to improve it.
 insertRecords :: Connection -> [ TableEntry ] -> IO Int64
 insertRecords conn table =
   executeMany conn [sql|
@@ -55,7 +54,7 @@ generateRecords :: IO [ TableEntry ]
 generateRecords =
   let
     firstDay = read "2021-01-01" :: Day
-    lastDay = read "2022-09-09" :: Day
+    lastDay = read "2022-09-21" :: Day
     generateRecord :: Day -> [ TableEntry ] -> IO [ TableEntry ]
     generateRecord currentDay acc
       | currentDay == lastDay =
@@ -80,4 +79,6 @@ main = do
 
   -- Perform insert
   _ <- insertRecords conn table
-  putStrLn "Done"
+
+  -- Print done
+  putStrLn "hi handsome I'm done :-*"

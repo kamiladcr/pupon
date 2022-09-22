@@ -18,10 +18,10 @@ def serve_layout():
     bar_chart = px.bar(df_2, x='month', y='value', color='year', barmode='group')
 
     return html.Div(children=[
-        html.H1(children='HelloK'),
+        html.H1(children='Hei'),
 
         html.Div(children='''
-            My demo using haskell and dash
+            My dash demo 
         '''),
 
         dcc.Graph(
@@ -36,7 +36,8 @@ def serve_layout():
     ])
 
 app = Dash(__name__)
-app.layout = serve_layout
+app.layout = serve_layout 
 
 if __name__ == '__main__':
     app.run_server(debug=True)
+
